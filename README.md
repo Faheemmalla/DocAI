@@ -39,8 +39,6 @@ Key improvements:
 
 These results indicate improved evaluated response quality; they do not directly measure hallucination rate or guarantee medical accuracy.
 
-### Evaluation Screenshots
-
 **Evaluation 1 — Baseline**
 
 ![DeepEval Baseline Results](eval1.png)
