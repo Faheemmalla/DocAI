@@ -6,6 +6,49 @@ DocAI is an AI-powered medical assistant built using **LangGraph, OpenAI, Pineco
 
 ![DocAI System Architecture](architecturep.png)
 
+## Evaluation & Hallucination Reduction
+
+I evaluated DocAI using **DeepEval** on a dataset of 25 medical question-answering test cases.
+
+### Evaluation 1 — Baseline
+- Evaluated the initial agent using DeepEval's GEval metric.
+- Identified issues involving unsupported medical information, speculation on ambiguous queries, irrelevant responses, and unsupported memory claims.
+
+### Evaluation 2 — After Improvements
+
+I refined the system prompt and answer-generation instructions in `app/agent.py` to improve evidence grounding and response reliability.
+
+Key improvements:
+- **Evidence Grounding:** Instructed the model to avoid generating unsupported medical facts.
+- **Uncertainty Handling:** Improved how the model responds when sufficient evidence is unavailable.
+- **Clarification:** Added instructions to handle ambiguous questions more carefully.
+- **Scope Control:** Improved handling of irrelevant, non-medical queries.
+- **Conversation History:** Added instructions to avoid unsupported claims about previous conversations.
+
+### Results
+
+| Metric | Evaluation 1 | Evaluation 2 |
+|---|---:|---:|
+| Test Cases | 25 | 25 |
+| Passed | 20 | 22 |
+| Failed | 5 | 3 |
+| Pass Rate | 80% | 88% |
+| Average GEval Score | 0.78 | 0.83 |
+
+**Outcome:** I improved the evaluation pass rate from **80% to 88%** and the average GEval score from **0.78 to 0.83** through prompt refinement and better evidence-grounding instructions.
+
+These results indicate improved evaluated response quality; they do not directly measure hallucination rate or guarantee medical accuracy.
+
+### Evaluation Screenshots
+
+**Evaluation 1 — Baseline**
+
+![DeepEval Baseline Results](eval1.png)
+
+**Evaluation 2 — After Improvements**
+
+![DeepEval Improved Results](eval2.png)
+
 ## Tech Stack
 
 | Technology | Purpose |
