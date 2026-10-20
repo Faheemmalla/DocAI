@@ -285,7 +285,7 @@ builder.add_edge('answer', END)
 
 # SQLite persistent state memory.
 conn = sqlite3.connect(
-    "medical_memory.db",
+    "/tmp/medical_memory.db",
     check_same_thread=False
 )
 
