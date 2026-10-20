@@ -4,7 +4,7 @@ DocAI is an AI-powered medical assistant built using **LangGraph, OpenAI, Pineco
 
 ## Architecture
 
-![DocAI System Architecture](architectures.png)
+![DocAI System Architecture](architecturep.png)
 
 ## Tech Stack
 
