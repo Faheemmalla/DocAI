@@ -218,3 +218,13 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# DocAI local files
+.env.*
+!.env.example
+*.db
+*.db-shm
+*.db-wal
+
+# DeepEval cache and local results
+.deepeval/

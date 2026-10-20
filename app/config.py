@@ -25,6 +25,7 @@ class Settings(BaseSettings):
     openai_vision_model: str = 'gpt-4.1-mini'
     api_token: str = ''
     allowed_origins: str = 'http://localhost:8000,http://127.0.0.1:8000'
+    enable_streaming: bool = True
     model_config = SettingsConfigDict(env_file='.env', extra='ignore')
 
 

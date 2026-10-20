@@ -44,7 +44,6 @@
                         </svg>
                         <span>New chat</span>
                     </button>
-                    <span id="status" data-state="checking">Checking...</span>
                 </div>
             </header>
 
@@ -72,14 +71,6 @@
             </div>
         </div>
 
-        <div class="notice" role="note">
-            <svg viewBox="0 0 20 20" width="16" height="16" fill="none" aria-hidden="true">
-                <circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="1.5" />
-                <path d="M10 6v4.5M10 13.5v.01" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
-            </svg>
-            <span>Educational guidance only, not a diagnosis. For severe symptoms, contact emergency services.</span>
-        </div>
-
         <section id="messages" aria-live="polite">
             <div class="empty">
                 <div class="empty-mark" aria-hidden="true">
@@ -99,6 +90,12 @@
                 </div>
             </div>
         </section>
+
+        <button id="scrollBottom" class="scroll-bottom" type="button" aria-label="Scroll to bottom" hidden title="Scroll to bottom">
+            <svg viewBox="0 0 20 20" width="18" height="18" fill="none" aria-hidden="true">
+                <path d="M10 4v11M5 10.5l5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+        </button>
 
         <div id="preview" hidden>
             <img id="thumbnail" alt="Selected image">
@@ -155,8 +152,9 @@
                     <button id="send" type="submit">
                         <span>Send</span>
                         <svg viewBox="0 0 20 20" width="16" height="16" fill="none" aria-hidden="true">
-                            <path d="M4 10h11M10.5 5l5 5-5 5" stroke="currentColor" stroke-width="1.8"
+                            <path class="send-icon" d="M4 10h11M10.5 5l5 5-5 5" stroke="currentColor" stroke-width="1.8"
                                 stroke-linecap="round" stroke-linejoin="round" />
+                            <rect class="stop-icon" x="5" y="5" width="10" height="10" rx="2" fill="currentColor" />
                         </svg>
                     </button>
                 </div>
