@@ -3,40 +3,172 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>MedGuide AI</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+    <meta name="theme-color" content="#0f3d3a">
+    <meta name="description" content="DocAI: medical education guidance grounded in sources.">
+    <title>DocAI — Medical guidance, with sources</title>
+    <link rel="icon"
+        href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%230f3d3a'/%3E%3Cpath d='M16 8v16M8 16h16' stroke='%23fff' stroke-width='3' stroke-linecap='round'/%3E%3Ccircle cx='16' cy='16' r='3.2' fill='%23d9b779'/%3E%3C/svg%3E">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="/static/style.css">
 </head>
 
 <body>
     <main class="app">
-        <header>
-            <div>
-                <h1>✚ MedGuide AI</h1>
-                <p>Medical education • Knowledge base + web research</p>
-            </div><span id="status">Checking...</span>
-        </header>
-        <div class="notice">Educational guidance only. Not a diagnosis. For severe symptoms, contact emergency services.
+
+        <div class="topbar">
+            <header class="masthead">
+                <div class="brand">
+                    <span class="brand-mark" aria-hidden="true">
+                        <svg viewBox="0 0 32 32" width="30" height="30" fill="none">
+                            <rect x="1" y="1" width="30" height="30" rx="9" fill="currentColor" opacity=".14" />
+                            <path d="M16 8v16M8 16h16" stroke="currentColor" stroke-width="3" stroke-linecap="round" />
+                            <circle cx="16" cy="16" r="3.2" fill="#d9b779" />
+                        </svg>
+                    </span>
+                    <div class="brand-text">
+                        <h1>Doc<em>AI</em></h1>
+                        <p>Medical education, grounded in sources</p>
+                    </div>
+                </div>
+
+                <div class="masthead-right">
+                    <button id="newChat" type="button" title="Start a new chat">
+                        <svg viewBox="0 0 20 20" width="15" height="15" fill="none" aria-hidden="true">
+                            <path d="M10 4v12M4 10h12" stroke="currentColor" stroke-width="1.8"
+                                stroke-linecap="round" />
+                        </svg>
+                        <span>New chat</span>
+                    </button>
+                    <span id="status" data-state="checking">Checking...</span>
+                </div>
+            </header>
+
+            <div class="tokenbar" id="tokenbar">
+                <label for="token">API token</label>
+                <div class="token-field">
+                    <svg viewBox="0 0 20 20" width="15" height="15" fill="none" aria-hidden="true">
+                        <rect x="4" y="9" width="12" height="8" rx="2" stroke="currentColor" stroke-width="1.5" />
+                        <path d="M7 9V6.5a3 3 0 016 0V9" stroke="currentColor" stroke-width="1.5"
+                            stroke-linecap="round" />
+                    </svg>
+                    <input id="token" type="password" placeholder="Paste API_TOKEN from .env" autocomplete="off"
+                        spellcheck="false">
+                    <button id="toggleToken" type="button" aria-label="Show token" title="Show / hide token">
+                        <svg viewBox="0 0 20 20" width="16" height="16" fill="none" aria-hidden="true">
+                            <path d="M1.8 10S5 4.5 10 4.5 18.2 10 18.2 10 15 15.5 10 15.5 1.8 10 1.8 10z"
+                                stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
+                            <circle cx="10" cy="10" r="2.4" stroke="currentColor" stroke-width="1.5" />
+                            <path class="slash" d="M3 17L17 3" stroke="currentColor" stroke-width="1.6"
+                                stroke-linecap="round" />
+                        </svg>
+                    </button>
+                </div>
+                <button id="connect" type="button"><span>Connect</span></button>
+            </div>
         </div>
+
+        <div class="notice" role="note">
+            <svg viewBox="0 0 20 20" width="16" height="16" fill="none" aria-hidden="true">
+                <circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="1.5" />
+                <path d="M10 6v4.5M10 13.5v.01" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+            </svg>
+            <span>Educational guidance only, not a diagnosis. For severe symptoms, contact emergency services.</span>
+        </div>
+
         <section id="messages" aria-live="polite">
-            <article class="bot">Hello! Ask a medical question, upload an image, or use the microphone. I'll cite
-                available sources and explain uncertainty.</article>
+            <div class="empty">
+                <div class="empty-mark" aria-hidden="true">
+                    <svg viewBox="0 0 32 32" width="28" height="28" fill="none">
+                        <path d="M16 8v16M8 16h16" stroke="currentColor" stroke-width="3" stroke-linecap="round" />
+                        <circle cx="16" cy="16" r="3.2" fill="#b8924a" />
+                    </svg>
+                </div>
+                <h2>What would you like to know?</h2>
+                <div class="chips">
+                    <button class="chip" type="button" data-q="What are the common causes of frequent headaches?">Causes
+                        of frequent headaches</button>
+                    <button class="chip" type="button"
+                        data-q="How do antibiotics work, and why does resistance happen?">How antibiotics work</button>
+                    <button class="chip" type="button" data-q="When should a fever be a reason to see a doctor?">When a
+                        fever is serious</button>
+                </div>
+            </div>
         </section>
-        <div id="preview" hidden><img id="thumbnail" alt="Selected image"><button id="remove" type="button">Remove image
-                ×</button></div>
-        <form id="chatForm"><textarea id="message" placeholder="Describe your symptoms or ask a question..." rows="2"
-                required maxlength="4000"></textarea>
-            <div class="toolbar"><label class="action" for="image">📎 Image</label><input id="image" type="file"
-                    accept="image/png,image/jpeg,image/webp" hidden><button class="action" id="camera" type="button">📷
-                    Camera</button><button class="action" id="mic" type="button">🎤 Voice</button><button class="action"
-                    id="listen" type="button">🔊 Read answer</button><button id="send" type="submit">Send ➜</button>
+
+        <div id="preview" hidden>
+            <img id="thumbnail" alt="Selected image">
+            <button id="remove" type="button">Remove image ×</button>
+        </div>
+
+        <form id="chatForm">
+            <div class="composer">
+                <textarea id="message" placeholder="Describe your symptoms or ask a question…" rows="2" required
+                    maxlength="4000" enterkeyhint="send" aria-label="Your message"></textarea>
+                <div class="toolbar">
+                    <label class="action" for="image" title="Attach an image">
+                        <svg viewBox="0 0 20 20" width="16" height="16" fill="none" aria-hidden="true">
+                            <path
+                                d="M16.5 9.5l-6 6a4 4 0 01-5.7-5.7l6.4-6.4a2.7 2.7 0 013.8 3.8l-6.4 6.4a1.3 1.3 0 01-1.9-1.9l5.7-5.7"
+                                stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                        <span>Image</span>
+                    </label>
+                    <input id="image" type="file" accept="image/png,image/jpeg,image/webp" hidden>
+
+                    <button class="action" id="camera" type="button" title="Use camera">
+                        <svg viewBox="0 0 20 20" width="16" height="16" fill="none" aria-hidden="true">
+                            <path
+                                d="M3 7a2 2 0 012-2h1.5l1-1.5h5L13.5 5H15a2 2 0 012 2v7a2 2 0 01-2 2H5a2 2 0 01-2-2V7z"
+                                stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
+                            <circle cx="10" cy="10.5" r="2.7" stroke="currentColor" stroke-width="1.5" />
+                        </svg>
+                        <span>Camera</span>
+                    </button>
+
+                    <button class="action" id="mic" type="button" title="Dictate your question">
+                        <svg viewBox="0 0 20 20" width="16" height="16" fill="none" aria-hidden="true">
+                            <rect x="7.5" y="2.5" width="5" height="9" rx="2.5" stroke="currentColor"
+                                stroke-width="1.5" />
+                            <path d="M4.5 9.5a5.5 5.5 0 0011 0M10 15v2.5" stroke="currentColor" stroke-width="1.5"
+                                stroke-linecap="round" />
+                        </svg>
+                        <span>Voice</span>
+                    </button>
+
+                    <button class="action" id="listen" type="button" title="Hear the last answer">
+                        <svg viewBox="0 0 20 20" width="16" height="16" fill="none" aria-hidden="true">
+                            <path d="M3.5 8v4h3l4 3.5v-11L6.5 8h-3zM13.5 7a4 4 0 010 6M15.5 5a7 7 0 010 10"
+                                stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                        <span>Read answer</span>
+                    </button>
+
+                    <span class="hint">Enter to send · Shift+Enter for new line</span>
+
+                    <button id="send" type="submit">
+                        <span>Send</span>
+                        <svg viewBox="0 0 20 20" width="16" height="16" fill="none" aria-hidden="true">
+                            <path d="M4 10h11M10.5 5l5 5-5 5" stroke="currentColor" stroke-width="1.8"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </button>
+                </div>
             </div>
         </form>
-        <details>
-            <summary>API access (optional)</summary><input id="token" type="password" placeholder="API_TOKEN from .env">
-        </details><video id="video" autoplay playsinline hidden></video>
-        <div id="cameraActions" hidden><button id="snap" type="button">Capture</button><button id="closeCamera"
-                type="button">Close camera</button></div><canvas id="canvas" hidden></canvas>
+
+        <video id="video" autoplay playsinline hidden></video>
+        <div id="cameraActions" hidden>
+            <button id="snap" type="button">Capture</button>
+            <button id="closeCamera" type="button">Close camera</button>
+        </div>
+        <canvas id="canvas" hidden></canvas>
     </main>
     <script src="/static/app.js"></script>
 </body>
